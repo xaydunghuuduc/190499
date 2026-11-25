@@ -34,7 +34,9 @@
     d.style.cssText = 'display:flex;align-items:center;justify-content:center;text-align:center;box-sizing:border-box;padding:8px;background:#9aa3ab;color:#fff;font-size:14px;letter-spacing:.06em;width:100%;height:' + (img.getAttribute('data-h') || '190px');
     img.parentNode.replaceChild(d, img);
   };
+  function chuanAnh(src) { return String(src || '').replace(/^\/+/, ''); }
   function anh(src, cls, h, alt) {
+    src = chuanAnh(src);
     return '<img class="' + cls + '" data-h="' + h + '" src="' + esc(src) + '" alt="' + esc(alt || '') + '" loading="lazy" onerror="anhLoi(this)" style="display:block;width:100%;height:' + h + ';object-fit:cover">';
   }
 
@@ -76,15 +78,62 @@
       '<p style="margin:0;font-size:15px;line-height:1.5;color:#3a424a">' + esc(phu) + '</p></a>';
   };
 
-  /* ===== Nội dung bài viết: mảng các dòng chữ =====
-     "## Tiêu đề nhỏ"            -> tiêu đề phụ
-     "- Gạch đầu dòng"           -> danh sách
-     "anh: images/a.jpg | Chú thích" -> ảnh
-     còn lại                     -> đoạn văn                    */
-  window.noiDungHTML = function (arr) {
+  /* ===== Nội dung bài viết =====
+     Nhận chuỗi văn bản soạn ở trang /admin (định dạng Markdown):
+       # / ## tiêu đề, ### tiêu đề nhỏ, - gạch đầu dòng, 1. đánh số,
+       **đậm**, *nghiêng*, [chữ](link), ![chú thích](images/anh.jpg), > trích dẫn
+     Vẫn đọc được kiểu cũ (mảng các dòng chữ). */
+  function inline(t) {
+    t = esc(t);
+    t = t.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, function (m, a, u) { return anh(u.replace(/&amp;/g, '&'), 'hinh-bv', 'auto', a.replace(/&amp;/g, '&')); });
+    t = t.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, function (m, a, u) {
+      u = u.replace(/&amp;/g, '&');
+      if (!/^(https?:|mailto:|tel:|#|\/|[\w.\-\/]+$)/i.test(u)) return a;
+      var ngoai = /^https?:/i.test(u);
+      return '<a href="' + esc(u) + '"' + (ngoai ? ' target="_blank" rel="noopener"' : '') + '>' + a + '</a>';
+    });
+    t = t.replace(/\*\*([^*]+)\*\*|__([^_]+)__/g, function (m, a, b) { return '<strong>' + (a || b) + '</strong>'; });
+    t = t.replace(/(^|[^*\w])\*([^*\s][^*]*)\*/g, '$1<em>$2</em>').replace(/(^|[^_\w])_([^_\s][^_]*)_/g, '$1<em>$2</em>');
+    t = t.replace(/`([^`]+)`/g, '<code>$1</code>');
+    return t;
+  }
+  function markdownHTML(src) {
+    var L = String(src || '').replace(/\r/g, '').split('\n'), out = [], i = 0, m;
+    function trong(l) { return !/\S/.test(l); }
+    while (i < L.length) {
+      var l = L[i];
+      if (trong(l)) { i++; continue; }
+      if ((m = /^(#{1,6})\s+(.*)$/.exec(l))) { out.push(m[1].length <= 2 ? '<h2>' + inline(m[2]) + '</h2>' : '<h3>' + inline(m[2]) + '</h3>'); i++; continue; }
+      if ((m = /^\s*!\[([^\]]*)\]\(([^)\s]+)\)\s*$/.exec(l))) {
+        var cap = m[1].trim();
+        out.push('<figure>' + anh(m[2], 'hinh-bv', 'auto', cap) + (cap ? '<figcaption>' + esc(cap) + '</figcaption>' : '') + '</figure>');
+        i++; continue;
+      }
+      if (/^\s*[-*+]\s+/.test(l) || /^\s*\d+[.)]\s+/.test(l)) {
+        var so = /^\s*\d+[.)]\s+/.test(l), it = [];
+        while (i < L.length && (so ? /^\s*\d+[.)]\s+/ : /^\s*[-*+]\s+/).test(L[i])) {
+          it.push('<li>' + inline(L[i].replace(/^\s*(?:[-*+]|\d+[.)])\s+/, '')) + '</li>'); i++;
+        }
+        out.push((so ? '<ol>' : '<ul>') + it.join('') + (so ? '</ol>' : '</ul>')); continue;
+      }
+      if (/^>\s?/.test(l)) {
+        var q = [];
+        while (i < L.length && /^>\s?/.test(L[i])) { q.push(L[i].replace(/^>\s?/, '')); i++; }
+        out.push('<blockquote>' + inline(q.join(' ')) + '</blockquote>'); continue;
+      }
+      var p = [];
+      while (i < L.length && !trong(L[i]) && !/^(#{1,6}\s|\s*[-*+]\s|\s*\d+[.)]\s|>\s?|\s*!\[[^\]]*\]\([^)\s]+\)\s*$)/.test(L[i])) {
+        p.push(inline(L[i].replace(/(\s{2,}|\\)$/, '<br>').replace(/\s+$/, ''))); i++;
+      }
+      if (!p.length) { out.push('<p>' + inline(l) + '</p>'); i++; } else out.push('<p>' + p.join(' ') + '</p>');
+    }
+    return out.join('');
+  }
+  window.noiDungHTML = function (nd) {
+    if (!Array.isArray(nd)) return markdownHTML(nd);
     var out = [], list = [];
     function flush() { if (list.length) { out.push('<ul>' + list.join('') + '</ul>'); list = []; } }
-    (arr || []).forEach(function (d) {
+    nd.forEach(function (d) {
       d = String(d);
       if (d.indexOf('- ') === 0) { list.push('<li>' + esc(d.slice(2)) + '</li>'); return; }
       flush();

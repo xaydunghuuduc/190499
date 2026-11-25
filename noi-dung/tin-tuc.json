@@ -1,0 +1,40 @@
+{
+  "muc": [
+    {
+      "id": "khoi-cong-cong-trinh",
+      "tieuDe": "Khởi công công trình [Tên công trình]",
+      "ngay": "2026-11-25",
+      "loai": "tin-du-an",
+      "tomTat": "Một hai câu tóm tắt nội dung bài viết.",
+      "anhDaiDien": "images/tin-1.jpg",
+      "noiDung": "Đoạn mở đầu: sự kiện gì, diễn ra khi nào, ở đâu.\n\n## Nội dung chính\n\nMô tả diễn biến, các thông tin quan trọng.\n\n![Chú thích ảnh](images/tin-1-a.jpg)\n\n## Kế hoạch tiếp theo\n\n- Ý 1\n- Ý 2\n"
+    },
+    {
+      "id": "tuyen-ky-su-xay-dung",
+      "tieuDe": "Tuyển kỹ sư xây dựng cho công trình mới",
+      "ngay": "2026-11-25",
+      "loai": "tin-tuyen-dung",
+      "tomTat": "Một hai câu tóm tắt vị trí, số lượng và hạn nộp hồ sơ.",
+      "anhDaiDien": "images/tin-4.jpg",
+      "noiDung": "Nội dung bài viết.\n"
+    },
+    {
+      "id": "tap-huan-an-toan-lao-dong",
+      "tieuDe": "Tập huấn an toàn lao động cho cán bộ và công nhân",
+      "ngay": "2026-11-25",
+      "loai": "tin-hoat-dong",
+      "tomTat": "Một hai câu tóm tắt nội dung bài viết.",
+      "anhDaiDien": "images/tin-2.jpg",
+      "noiDung": "Nội dung bài viết.\n"
+    },
+    {
+      "id": "nghiem-thu-ban-giao-cong-trinh",
+      "tieuDe": "Nghiệm thu và bàn giao công trình [Tên công trình]",
+      "ngay": "2026-11-25",
+      "loai": "tin-du-an",
+      "tomTat": "Một hai câu tóm tắt nội dung bài viết.",
+      "anhDaiDien": "images/tin-3.jpg",
+      "noiDung": "Nội dung bài viết.\n"
+    }
+  ]
+}

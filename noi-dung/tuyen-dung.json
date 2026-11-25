@@ -1,0 +1,37 @@
+{
+  "muc": [
+    {
+      "id": "ky-su-xay-dung",
+      "viTri": "Kỹ sư xây dựng",
+      "phongBan": "Phòng Kỹ thuật",
+      "hinhThuc": "Toàn thời gian",
+      "soLuong": "02",
+      "diaDiem": "[Địa điểm làm việc]",
+      "mucLuong": "Thỏa thuận",
+      "hanNop": "[Hạn nộp hồ sơ]",
+      "noiDung": "## Mô tả công việc\n\n- Giám sát, triển khai thi công tại công trình\n- Lập hồ sơ nghiệm thu, thanh toán\n\n## Yêu cầu\n\n- Tốt nghiệp chuyên ngành xây dựng\n- Có kinh nghiệm từ 2 năm (ưu tiên)\n\n## Quyền lợi\n\n- Thu nhập cạnh tranh, đóng bảo hiểm theo luật\n\n## Cách ứng tuyển\n\nGửi CV về email công ty hoặc gọi số điện thoại ở cuối trang.\n"
+    },
+    {
+      "id": "chi-huy-truong",
+      "viTri": "Chỉ huy trưởng công trình",
+      "phongBan": "Ban chỉ huy công trường",
+      "hinhThuc": "Toàn thời gian",
+      "soLuong": "01",
+      "diaDiem": "[Địa điểm làm việc]",
+      "mucLuong": "Thỏa thuận",
+      "hanNop": "",
+      "noiDung": "Mô tả công việc và yêu cầu.\n"
+    },
+    {
+      "id": "cong-nhan-thi-cong",
+      "viTri": "Công nhân thi công",
+      "phongBan": "Đội thi công",
+      "hinhThuc": "Thời vụ",
+      "soLuong": "10",
+      "diaDiem": "[Địa điểm làm việc]",
+      "mucLuong": "Thỏa thuận",
+      "hanNop": "",
+      "noiDung": "Mô tả công việc và yêu cầu.\n"
+    }
+  ]
+}

@@ -1,279 +1,87 @@
 /* =====================================================================
-   DU-LIEU.JS — NƠI DUY NHẤT BẠN CẦN SỬA ĐỂ THÊM / ĐỔI NỘI DUNG
-   Quy tắc:
-   - Chữ nằm trong dấu nháy kép "..."
-   - Mỗi mục ngăn cách bằng dấu phẩy ,
-   - Muốn xuống đoạn mới trong bài viết: thêm một dòng "..." mới
-   - Bài MỚI nhất đặt trên cùng của danh sách
-   - "id" là tên riêng của bài, viết thường, không dấu, nối bằng gạch ngang,
-     không trùng nhau (ví dụ "khoi-cong-nha-may-a")
-
-   CÁCH GẮN ẢNH: chép ảnh vào thư mục images rồi ghi "images/ten-anh.jpg".
-   Chưa có ảnh thì web hiện ô xám ghi đúng tên file cần chép vào.
-
-   TRONG PHẦN noiDung, mỗi dòng là một khối:
-     "Đoạn văn bình thường"
-     "## Tiêu đề nhỏ"
-     "- Gạch đầu dòng"
-     "anh: images/hinh.jpg | Chú thích ảnh"
+   DU-LIEU.JS — TẢI NỘI DUNG TỪ THƯ MỤC noi-dung/
+   Bạn KHÔNG cần sửa file này. Nội dung được soạn tại trang /admin
+   (hoặc sửa trực tiếp các file .json trong thư mục noi-dung/).
    ===================================================================== */
 
-/* ---------- 1. THÔNG TIN CÔNG TY ---------- */
-var CAU_HINH = {
-  sdt: "0357190499",
-  email: "info.hdc@gmail.com",
-  diaChi: "Mộ Đức, Quảng Ngãi",
-  maSoThue: "19041999",
-  /* Dán link thật vào đây; để "" thì nút chưa có link */
-  facebook: "",
-  tiktok: "",
-  youtube: "",
-  zalo: "https://zalo.me/0357190499",
-  gioLamViec: "Thứ Hai - Thứ Bảy, 7:30 - 17:00",
-  /* Google Maps: Chia sẻ > Nhúng bản đồ > copy phần src="..." dán vào đây */
-  banDo: "",
-  /* Số liệu hiện ở trang chủ và trang Giới thiệu: ["con số", "nhãn"] */
-  soLieu: [["19", "Năm kinh nghiệm"], ["04", "Dự án đã thực hiện"], ["19", "Kỹ sư và công nhân"], ["99", "Thiết bị thi công"]]
-};
-
-/* ---------- 1b. TRANG GIỚI THIỆU ---------- */
-var GIOI_THIEU = {
-  anhDaiDien: "images/gioi-thieu.jpg",
-  tomTat: "Xây dựng Hữu Đức hoạt động trong lĩnh vực xây dựng với ba mảng chính: dân dụng, cầu đường và cung cấp vật tư xây dựng. Với đội ngũ kỹ sư, công nhân giàu kinh nghiệm cùng hệ thống thiết bị thi công đồng bộ, chúng tôi cam kết chất lượng, tiến độ và an toàn lao động trên từng công trình.",
-  noiDung: [
-    "## Lịch sử hình thành",
-    "Viết vài câu về năm thành lập và quá trình phát triển. (Nội dung mẫu.)",
-    "## Năng lực",
-    "- Đội ngũ kỹ sư, chỉ huy trưởng, cán bộ kỹ thuật",
-    "- Thiết bị, máy móc thi công",
-    "- Hệ thống quản lý chất lượng, an toàn lao động",
-    "## Cam kết",
-    "Chất lượng, tiến độ, an toàn và minh bạch với chủ đầu tư.",
-    "anh: images/gioi-thieu-2.jpg | Chú thích ảnh (có thể xóa dòng này)"
-  ]
-};
-
-/* ---------- 2. LĨNH VỰC HOẠT ĐỘNG ----------
-   bieuTuong chọn một trong: "dan-dung", "cau-duong", "vat-lieu"
-   (mẫu để thêm lĩnh vực mới: copy cả khối { ... }, đổi nội dung)      */
-var LINH_VUC = [
-  {
-    id: "dan-dung",
-    ten: "Thi công dân dụng",
-    bieuTuong: "dan-dung",
-    tomTat: "Thi công nhà ở, văn phòng, trường học và các công trình công cộng, đảm bảo chất lượng và tiến độ.",
-    noiDung: [
-      "Xây dựng Hữu Đức thi công các công trình dân dụng từ phần móng đến hoàn thiện, theo đúng hồ sơ thiết kế và tiêu chuẩn hiện hành.",
-      "## Hạng mục thực hiện",
-      "- Nhà ở, nhà phố, biệt thự",
-      "- Văn phòng, trường học, bệnh xá",
-      "- Nhà xưởng, kho bãi",
-      "## Cam kết",
-      "Chất lượng, tiến độ và an toàn lao động trên từng công trình. (Nội dung mẫu, bạn thay bằng nội dung thật.)",
-      "anh: images/linh-vuc-dan-dung.jpg | Chú thích ảnh (có thể xóa dòng này)"
-    ]
-  },
-  {
-    id: "cau-duong",
-    ten: "Thi công cầu đường",
-    bieuTuong: "cau-duong",
-    tomTat: "Thi công đường giao thông, cầu, cống và các hạng mục phụ trợ theo đúng hồ sơ thiết kế và tiêu chuẩn.",
-    noiDung: [
-      "Thi công đường giao thông, cầu, cống và các hạng mục phụ trợ. (Nội dung mẫu, bạn thay bằng nội dung thật.)",
-      "## Hạng mục thực hiện",
-      "- Nền, mặt đường",
-      "- Cầu, cống thoát nước",
-      "- An toàn giao thông"
-    ]
-  },
-  {
-    id: "vat-lieu",
-    ten: "Cung cấp vật tư",
-    bieuTuong: "vat-lieu",
-    tomTat: "Cung cấp xi măng, thép, cát, đá, gạch và các loại vật tư xây dựng cho công trình và khách hàng.",
-    noiDung: [
-      "Cung cấp vật tư xây dựng đúng chủng loại, đủ số lượng, giao hàng đúng hẹn cho công trình và khách hàng. (Nội dung mẫu, bạn thay bằng nội dung thật.)",
-      "## Vật tư cung cấp",
-      "- Xi măng, thép xây dựng",
-      "- Cát, đá, gạch",
-      "- Vật liệu hoàn thiện, thiết bị điện nước"
-    ]
-  }
-];
-
-/* ---------- 3. DỰ ÁN ----------
-   loai: ghi đúng id của một lĩnh vực ở trên ("dan-dung", "cau-duong", "vat-lieu")
-   Điền thiếu mục nào thì mục đó tự ẩn trên trang chi tiết.               */
-var DU_AN = [
-  {
-    id: "cong-trinh-1",
-    ten: "[Tên công trình 1]",
-    loai: "dan-dung",
-    diaDiem: "[Địa điểm]",
-    nam: "[Năm hoàn thành]",
-    chuDauTu: "[Chủ đầu tư]",
-    quyMo: "[Quy mô, ví dụ: 5 tầng, 1.200 m²]",
-    giaTri: "",
-    anhDaiDien: "images/du-an-1.jpg",
-    thuVienAnh: ["images/du-an-1-a.jpg", "images/du-an-1-b.jpg", "images/du-an-1-c.jpg"],
-    tomTat: "Một hai câu giới thiệu ngắn về công trình.",
-    noiDung: [
-      "Mô tả công trình: vị trí, quy mô, các hạng mục Hữu Đức thực hiện.",
-      "## Hạng mục thi công",
-      "- Hạng mục 1",
-      "- Hạng mục 2",
-      "## Kết quả",
-      "Công trình hoàn thành đúng tiến độ, đạt yêu cầu chất lượng."
-    ]
-  },
-  {
-    id: "cong-trinh-2",
-    ten: "[Tên công trình 2]",
-    loai: "cau-duong",
-    diaDiem: "[Địa điểm]",
-    nam: "[Năm hoàn thành]",
-    chuDauTu: "",
-    quyMo: "",
-    giaTri: "",
-    anhDaiDien: "images/du-an-2.jpg",
-    thuVienAnh: [],
-    tomTat: "Một hai câu giới thiệu ngắn về công trình.",
-    noiDung: ["Mô tả công trình."]
-  },
-  {
-    id: "cong-trinh-3",
-    ten: "[Tên công trình 3]",
-    loai: "vat-lieu",
-    diaDiem: "[Địa điểm]",
-    nam: "[Năm hoàn thành]",
-    chuDauTu: "",
-    quyMo: "",
-    giaTri: "",
-    anhDaiDien: "images/du-an-3.jpg",
-    thuVienAnh: [],
-    tomTat: "Một hai câu giới thiệu ngắn về công trình.",
-    noiDung: ["Mô tả công trình."]
-  }
-];
-
-/* ---------- 4. TIN TỨC (bài MỚI nhất để trên cùng) ----------
-   MẪU ĐỂ COPY, dán lên ĐẦU danh sách rồi sửa:
-   {
-     id: "ten-bai-khong-dau",
-     tieuDe: "Tiêu đề bài viết",
-     ngay: "24/11/2026",
-     loai: "tin-hoat-dong",   (chọn: tin-du-an, tin-tuyen-dung hoặc tin-hoat-dong)
-     tomTat: "Một hai câu tóm tắt hiện ở thẻ ngoài trang chủ.",
-     anhDaiDien: "images/ten-anh.jpg",
-     noiDung: [
-       "Đoạn mở đầu.",
-       "## Tiêu đề nhỏ",
-       "Đoạn tiếp theo.",
-       "anh: images/anh-trong-bai.jpg | Chú thích",
-       "- Ý 1",
-       "- Ý 2"
-     ]
-   },
-   (nhớ dấu phẩy ở cuối khối, trừ khối cuối cùng)                          */
-/* Ba thẻ tin. Mỗi bài ghi loai: đúng một trong ba id dưới đây.
-   Đổi tên thẻ thì sửa chữ trong ten, KHÔNG đổi id.                      */
-var TIN_LOAI = [
+/* Ba thẻ tin (đổi tên thẻ thì sửa chữ trong ten, KHÔNG đổi id) */
+window.TIN_LOAI = [
   { id: "tin-du-an", ten: "Tin dự án" },
   { id: "tin-tuyen-dung", ten: "Tin tuyển dụng" },
   { id: "tin-hoat-dong", ten: "Tin hoạt động" }
 ];
 
-var TIN_TUC = [
-  {
-    id: "khoi-cong-cong-trinh",
-    tieuDe: "Khởi công công trình [Tên công trình]",
-    ngay: "[Ngày đăng]",
-    loai: "tin-du-an",
-    tomTat: "Một hai câu tóm tắt nội dung bài viết.",
-    anhDaiDien: "images/tin-1.jpg",
-    noiDung: [
-      "Đoạn mở đầu: sự kiện gì, diễn ra khi nào, ở đâu.",
-      "## Nội dung chính",
-      "Mô tả diễn biến, các thông tin quan trọng.",
-      "anh: images/tin-1-a.jpg | Chú thích ảnh",
-      "## Kế hoạch tiếp theo",
-      "- Ý 1",
-      "- Ý 2"
-    ]
-  },
-  {
-    id: "tuyen-ky-su-xay-dung",
-    tieuDe: "Tuyển kỹ sư xây dựng cho công trình mới",
-    ngay: "[Ngày đăng]",
-    loai: "tin-tuyen-dung",
-    tomTat: "Một hai câu tóm tắt vị trí, số lượng và hạn nộp hồ sơ.",
-    anhDaiDien: "images/tin-4.jpg",
-    noiDung: ["Nội dung bài viết."]
-  },
-  {
-    id: "tap-huan-an-toan-lao-dong",
-    tieuDe: "Tập huấn an toàn lao động cho cán bộ và công nhân",
-    ngay: "[Ngày đăng]",
-    loai: "tin-hoat-dong",
-    tomTat: "Một hai câu tóm tắt nội dung bài viết.",
-    anhDaiDien: "images/tin-2.jpg",
-    noiDung: ["Nội dung bài viết."]
-  },
-  {
-    id: "nghiem-thu-ban-giao-cong-trinh",
-    tieuDe: "Nghiệm thu và bàn giao công trình [Tên công trình]",
-    ngay: "[Ngày đăng]",
-    loai: "tin-du-an",
-    tomTat: "Một hai câu tóm tắt nội dung bài viết.",
-    anhDaiDien: "images/tin-3.jpg",
-    noiDung: ["Nội dung bài viết."]
-  }
-];
+(function () {
+  var FILES = ['cau-hinh', 'gioi-thieu', 'linh-vuc', 'du-an', 'tin-tuc', 'tuyen-dung'];
 
-/* ---------- 5. TUYỂN DỤNG (mỗi vị trí là một khối) ---------- */
-var TUYEN_DUNG = [
-  {
-    id: "ky-su-xay-dung",
-    viTri: "Kỹ sư xây dựng",
-    phongBan: "Phòng Kỹ thuật",
-    hinhThuc: "Toàn thời gian",
-    soLuong: "02",
-    diaDiem: "[Địa điểm làm việc]",
-    mucLuong: "Thỏa thuận",
-    hanNop: "[Hạn nộp hồ sơ]",
-    noiDung: [
-      "## Mô tả công việc",
-      "- Giám sát, triển khai thi công tại công trình",
-      "- Lập hồ sơ nghiệm thu, thanh toán",
-      "## Yêu cầu",
-      "- Tốt nghiệp chuyên ngành xây dựng",
-      "- Có kinh nghiệm từ 2 năm (ưu tiên)",
-      "## Quyền lợi",
-      "- Thu nhập cạnh tranh, đóng bảo hiểm theo luật",
-      "## Cách ứng tuyển",
-      "Gửi CV về email công ty hoặc gọi số điện thoại ở cuối trang."
-    ]
-  },
-  {
-    id: "chi-huy-truong",
-    viTri: "Chỉ huy trưởng công trình",
-    phongBan: "Ban chỉ huy công trường",
-    hinhThuc: "Toàn thời gian",
-    soLuong: "01",
-    diaDiem: "[Địa điểm làm việc]",
-    mucLuong: "Thỏa thuận",
-    hanNop: "",
-    noiDung: ["Mô tả công việc và yêu cầu."]
-  },
-  {
-    id: "cong-nhan-thi-cong",
-    viTri: "Công nhân thi công",
-    phongBan: "Đội thi công",
-    hinhThuc: "Thời vụ",
-    soLuong: "10",
-    diaDiem: "[Địa điểm làm việc]",
-    mucLuong: "Thỏa thuận",
-    hanNop: "",
-    noiDung: ["Mô tả công việc và yêu cầu."]
+  function lay(ten) {
+    return fetch('noi-dung/' + ten + '.json', { cache: 'no-cache' }).then(function (r) {
+      if (!r.ok) throw new Error(ten + ': ' + r.status);
+      return r.json();
+    });
   }
-];
+
+  /* "2026-11-25" -> "25/11/2026"; chuỗi khác giữ nguyên */
+  function ngayDep(s) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(s || ''));
+    return m ? m[3] + '/' + m[2] + '/' + m[1] : (s || '');
+  }
+
+  function nap(d) {
+    var ch = d['cau-hinh'] || {};
+    ch.soLieu = (ch.soLieu || []).map(function (x) { return [x.so, x.nhan]; });
+    window.CAU_HINH = ch;
+    window.GIOI_THIEU = d['gioi-thieu'] || {};
+    window.LINH_VUC = (d['linh-vuc'] || {}).muc || [];
+    window.DU_AN = (d['du-an'] || {}).muc || [];
+    window.TUYEN_DUNG = (d['tuyen-dung'] || {}).muc || [];
+
+    var tin = ((d['tin-tuc'] || {}).muc || []).map(function (t, i) {
+      t._thuTu = i;
+      return t;
+    });
+    /* Bài mới nhất lên đầu; cùng ngày thì giữ thứ tự trong file */
+    tin.sort(function (a, b) {
+      var x = String(a.ngay || ''), y = String(b.ngay || '');
+      return x < y ? 1 : x > y ? -1 : a._thuTu - b._thuTu;
+    });
+    tin.forEach(function (t) { t.ngay = ngayDep(t.ngay); });
+    window.TIN_TUC = tin;
+
+    /* Mục thiếu mã đường dẫn (bài mới tạo trong trang quản trị) -> tự tạo từ tiêu đề */
+    [['TIN_TUC', 'tieuDe'], ['DU_AN', 'ten'], ['TUYEN_DUNG', 'viTri'], ['LINH_VUC', 'ten']].forEach(function (p) {
+      var ds = window[p[0]], da = {};
+      ds.forEach(function (x) { if (x.id) da[x.id] = 1; });
+      ds.forEach(function (x) {
+        if (x.id) return;
+        var goc = String(x[p[1]] || 'muc').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+          .replace(/đ/g, 'd').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'muc';
+        var id = goc, n = 2;
+        while (da[id]) id = goc + '-' + n++;
+        da[id] = 1; x.id = id;
+      });
+    });
+  }
+
+  function chayWeb() {
+    ['chung.js', 'trang.js'].reduce(function (truoc, f) {
+      return truoc.then(function () {
+        return new Promise(function (ok, loi) {
+          var s = document.createElement('script');
+          s.src = f; s.onload = ok; s.onerror = function () { loi(new Error(f)); };
+          document.body.appendChild(s);
+        });
+      });
+    }, Promise.resolve());
+  }
+
+  Promise.all(FILES.map(lay)).then(function (kq) {
+    var d = {};
+    FILES.forEach(function (f, i) { d[f] = kq[i]; });
+    nap(d);
+    return chayWeb();
+  }).catch(function (e) {
+    var m = document.getElementById('noi-dung');
+    if (m) m.innerHTML = '<div style="padding:48px 64px;font-size:17px;line-height:1.6;color:#2b3238"><h1>Không tải được nội dung</h1><p>Hãy mở web qua địa chỉ trên mạng (không mở trực tiếp file index.html bằng cách bấm đúp).</p><p style="color:#6b5a4d;font-size:14px">' + String(e.message || e) + '</p></div>';
+  });
+})();

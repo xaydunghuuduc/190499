@@ -58,7 +58,10 @@ a.btn{display:inline-block}
 .noidung{max-width:760px;font-size:17px;line-height:1.75;color:#2b3238}
 .noidung p{margin:0 0 16px}
 .noidung h2{margin:28px 0 12px;font-size:26px;font-weight:700;color:#85391d}
-.noidung ul{margin:0 0 16px;padding-left:22px}
+.noidung ul,.noidung ol{margin:0 0 16px;padding-left:22px}
+.noidung h3{margin:22px 0 10px;font-size:20px;font-weight:700;color:#85391d}
+.noidung blockquote{margin:0 0 16px;padding:8px 18px;border-left:4px solid #AD532F;background:#F3E9DE;color:#3a424a}
+.noidung a{color:#AD532F;text-decoration:underline}
 .noidung figure{margin:24px 0}
 .noidung figure img{width:100%;height:auto}
 .noidung figcaption{font-size:14px;color:#6b5a4d;margin-top:6px}
