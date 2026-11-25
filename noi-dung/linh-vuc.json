@@ -1,0 +1,25 @@
+{
+  "muc": [
+    {
+      "id": "dan-dung",
+      "ten": "Thi công dân dụng",
+      "bieuTuong": "dan-dung",
+      "tomTat": "Thi công nhà ở, văn phòng, trường học và các công trình công cộng, đảm bảo chất lượng và tiến độ.",
+      "noiDung": "Xây dựng Hữu Đức thi công các công trình dân dụng từ phần móng đến hoàn thiện, theo đúng hồ sơ thiết kế và tiêu chuẩn hiện hành.\n\n## Hạng mục thực hiện\n\n- Nhà ở, nhà phố, biệt thự\n- Văn phòng, trường học, bệnh xá\n- Nhà xưởng, kho bãi\n\n## Cam kết\n\nChất lượng, tiến độ và an toàn lao động trên từng công trình. (Nội dung mẫu, bạn thay bằng nội dung thật.)\n\n![Chú thích ảnh (có thể xóa dòng này)](images/linh-vuc-dan-dung.jpg)\n"
+    },
+    {
+      "id": "cau-duong",
+      "ten": "Thi công cầu đường",
+      "bieuTuong": "cau-duong",
+      "tomTat": "Thi công đường giao thông, cầu, cống và các hạng mục phụ trợ theo đúng hồ sơ thiết kế và tiêu chuẩn.",
+      "noiDung": "Thi công đường giao thông, cầu, cống và các hạng mục phụ trợ. (Nội dung mẫu, bạn thay bằng nội dung thật.)\n\n## Hạng mục thực hiện\n\n- Nền, mặt đường\n- Cầu, cống thoát nước\n- An toàn giao thông\n"
+    },
+    {
+      "id": "vat-lieu",
+      "ten": "Cung cấp vật tư",
+      "bieuTuong": "vat-lieu",
+      "tomTat": "Cung cấp xi măng, thép, cát, đá, gạch và các loại vật tư xây dựng cho công trình và khách hàng.",
+      "noiDung": "Cung cấp vật tư xây dựng đúng chủng loại, đủ số lượng, giao hàng đúng hẹn cho công trình và khách hàng. (Nội dung mẫu, bạn thay bằng nội dung thật.)\n\n## Vật tư cung cấp\n\n- Xi măng, thép xây dựng\n- Cát, đá, gạch\n- Vật liệu hoàn thiện, thiết bị điện nước\n"
+    }
+  ]
+}

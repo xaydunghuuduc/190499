@@ -1,0 +1,160 @@
+# Cấu hình trang quản trị nội dung (Sveltia CMS)
+# Mở https://<địa-chỉ-web>/admin/ rồi đăng nhập bằng GitHub token.
+backend:
+  name: github
+  repo: xaydunghuuduc/190499
+  branch: main
+
+media_folder: images
+public_folder: /images
+
+collections:
+  # ---------------------------------------------------------------- TIN TỨC
+  - name: tin_tuc
+    label: Tin tức
+    files:
+      - name: tin_tuc
+        label: Danh sách tin tức
+        file: noi-dung/tin-tuc.json
+        fields:
+          - label: Bài viết
+            label_singular: Bài viết
+            name: muc
+            widget: list
+            summary: "{{fields.ngay}} · {{fields.tieuDe}}"
+            fields:
+              - { label: Mã đường dẫn, name: id, widget: hidden, default: "" }
+              - { label: Tiêu đề, name: tieuDe, widget: string }
+              - { label: Ngày đăng, name: ngay, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+              - label: Thẻ tin
+                name: loai
+                widget: select
+                options:
+                  - { label: Tin dự án, value: tin-du-an }
+                  - { label: Tin tuyển dụng, value: tin-tuyen-dung }
+                  - { label: Tin hoạt động, value: tin-hoat-dong }
+              - { label: Tóm tắt (hiện ở thẻ ngoài trang chủ), name: tomTat, widget: text, required: false }
+              - { label: Ảnh đại diện, name: anhDaiDien, widget: image, required: false }
+              - { label: Nội dung, name: noiDung, widget: markdown }
+
+  # ---------------------------------------------------------------- DỰ ÁN
+  - name: du_an
+    label: Dự án
+    files:
+      - name: du_an
+        label: Danh sách dự án
+        file: noi-dung/du-an.json
+        fields:
+          - label: Dự án
+            label_singular: Dự án
+            name: muc
+            widget: list
+            summary: "{{fields.ten}}"
+            fields:
+              - { label: Mã đường dẫn, name: id, widget: hidden, default: "" }
+              - { label: Tên công trình, name: ten, widget: string }
+              - label: Lĩnh vực
+                name: loai
+                widget: select
+                options:
+                  - { label: Thi công dân dụng, value: dan-dung }
+                  - { label: Thi công cầu đường, value: cau-duong }
+                  - { label: Cung cấp vật tư, value: vat-lieu }
+              - { label: Địa điểm, name: diaDiem, widget: string, required: false }
+              - { label: Năm hoàn thành, name: nam, widget: string, required: false }
+              - { label: Chủ đầu tư, name: chuDauTu, widget: string, required: false }
+              - { label: Quy mô, name: quyMo, widget: string, required: false }
+              - { label: Giá trị, name: giaTri, widget: string, required: false }
+              - { label: Ảnh đại diện, name: anhDaiDien, widget: image, required: false }
+              - label: Thư viện ảnh
+                name: thuVienAnh
+                widget: list
+                required: false
+                field: { label: Ảnh, name: anh, widget: image }
+              - { label: Tóm tắt, name: tomTat, widget: text, required: false }
+              - { label: Nội dung, name: noiDung, widget: markdown }
+
+  # ---------------------------------------------------------------- LĨNH VỰC
+  - name: linh_vuc
+    label: Lĩnh vực hoạt động
+    files:
+      - name: linh_vuc
+        label: Các lĩnh vực
+        file: noi-dung/linh-vuc.json
+        fields:
+          - label: Lĩnh vực
+            label_singular: Lĩnh vực
+            name: muc
+            widget: list
+            allow_add: false
+            summary: "{{fields.ten}}"
+            fields:
+              - { label: Mã đường dẫn, name: id, widget: hidden, default: "" }
+              - label: Biểu tượng
+                name: bieuTuong
+                widget: select
+                options:
+                  - { label: Nhà (dân dụng), value: dan-dung }
+                  - { label: Cầu (cầu đường), value: cau-duong }
+                  - { label: Vật liệu (vật tư), value: vat-lieu }
+              - { label: Tên lĩnh vực, name: ten, widget: string }
+              - { label: Tóm tắt, name: tomTat, widget: text }
+              - { label: Nội dung, name: noiDung, widget: markdown }
+
+  # ---------------------------------------------------------------- TUYỂN DỤNG
+  - name: tuyen_dung
+    label: Tuyển dụng
+    files:
+      - name: tuyen_dung
+        label: Các vị trí tuyển dụng
+        file: noi-dung/tuyen-dung.json
+        fields:
+          - label: Vị trí
+            label_singular: Vị trí
+            name: muc
+            widget: list
+            summary: "{{fields.viTri}}"
+            fields:
+              - { label: Mã đường dẫn, name: id, widget: hidden, default: "" }
+              - { label: Vị trí, name: viTri, widget: string }
+              - { label: Phòng ban, name: phongBan, widget: string, required: false }
+              - { label: Hình thức (toàn thời gian, thời vụ...), name: hinhThuc, widget: string, required: false }
+              - { label: Số lượng, name: soLuong, widget: string, required: false }
+              - { label: Địa điểm làm việc, name: diaDiem, widget: string, required: false }
+              - { label: Mức lương, name: mucLuong, widget: string, required: false }
+              - { label: Hạn nộp hồ sơ, name: hanNop, widget: string, required: false }
+              - { label: Nội dung, name: noiDung, widget: markdown }
+
+  # ---------------------------------------------------------------- TRANG CỐ ĐỊNH
+  - name: trang_khac
+    label: Giới thiệu và Liên hệ
+    files:
+      - name: gioi_thieu
+        label: Trang Giới thiệu
+        file: noi-dung/gioi-thieu.json
+        fields:
+          - { label: Ảnh đại diện, name: anhDaiDien, widget: image, required: false }
+          - { label: Tóm tắt (hiện ở trang chủ), name: tomTat, widget: text }
+          - { label: Nội dung, name: noiDung, widget: markdown }
+      - name: cau_hinh
+        label: Thông tin liên hệ và số liệu
+        file: noi-dung/cau-hinh.json
+        fields:
+          - { label: Điện thoại, name: sdt, widget: string }
+          - { label: Email, name: email, widget: string }
+          - { label: Địa chỉ, name: diaChi, widget: string }
+          - { label: Mã số thuế, name: maSoThue, widget: string }
+          - { label: Giờ làm việc, name: gioLamViec, widget: string, required: false }
+          - { label: Link Facebook, name: facebook, widget: string, required: false }
+          - { label: Link TikTok, name: tiktok, widget: string, required: false }
+          - { label: Link YouTube, name: youtube, widget: string, required: false }
+          - { label: Link Zalo, name: zalo, widget: string, required: false }
+          - { label: Link nhúng Google Maps (phần src), name: banDo, widget: string, required: false }
+          - label: Số liệu ở trang chủ
+            label_singular: Số liệu
+            name: soLieu
+            widget: list
+            summary: "{{fields.so}} · {{fields.nhan}}"
+            fields:
+              - { label: Con số, name: so, widget: string }
+              - { label: Nhãn, name: nhan, widget: string }

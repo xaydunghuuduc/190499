@@ -1,0 +1,50 @@
+{
+  "muc": [
+    {
+      "id": "cong-trinh-1",
+      "ten": "[Tên công trình 1]",
+      "loai": "dan-dung",
+      "diaDiem": "[Địa điểm]",
+      "nam": "[Năm hoàn thành]",
+      "chuDauTu": "[Chủ đầu tư]",
+      "quyMo": "[Quy mô, ví dụ: 5 tầng, 1.200 m²]",
+      "giaTri": "",
+      "anhDaiDien": "images/du-an-1.jpg",
+      "thuVienAnh": [
+        "images/du-an-1-a.jpg",
+        "images/du-an-1-b.jpg",
+        "images/du-an-1-c.jpg"
+      ],
+      "tomTat": "Một hai câu giới thiệu ngắn về công trình.",
+      "noiDung": "Mô tả công trình: vị trí, quy mô, các hạng mục Hữu Đức thực hiện.\n\n## Hạng mục thi công\n\n- Hạng mục 1\n- Hạng mục 2\n\n## Kết quả\n\nCông trình hoàn thành đúng tiến độ, đạt yêu cầu chất lượng.\n"
+    },
+    {
+      "id": "cong-trinh-2",
+      "ten": "[Tên công trình 2]",
+      "loai": "cau-duong",
+      "diaDiem": "[Địa điểm]",
+      "nam": "[Năm hoàn thành]",
+      "chuDauTu": "",
+      "quyMo": "",
+      "giaTri": "",
+      "anhDaiDien": "images/du-an-2.jpg",
+      "thuVienAnh": [],
+      "tomTat": "Một hai câu giới thiệu ngắn về công trình.",
+      "noiDung": "Mô tả công trình.\n"
+    },
+    {
+      "id": "cong-trinh-3",
+      "ten": "[Tên công trình 3]",
+      "loai": "vat-lieu",
+      "diaDiem": "[Địa điểm]",
+      "nam": "[Năm hoàn thành]",
+      "chuDauTu": "",
+      "quyMo": "",
+      "giaTri": "",
+      "anhDaiDien": "images/du-an-3.jpg",
+      "thuVienAnh": [],
+      "tomTat": "Một hai câu giới thiệu ngắn về công trình.",
+      "noiDung": "Mô tả công trình.\n"
+    }
+  ]
+}
