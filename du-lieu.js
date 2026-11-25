@@ -39,7 +39,7 @@ var CAU_HINH = {
 /* ---------- 1b. TRANG GIỚI THIỆU ---------- */
 var GIOI_THIEU = {
   anhDaiDien: "images/gioi-thieu.jpg",
-  tomTat: "Xây dựng Hữu Đức hoạt động trong lĩnh vực xây dựng với ba mảng chính: dân dụng, cầu đường và mua bán vật liệu xây dựng. Với đội ngũ kỹ sư, công nhân giàu kinh nghiệm cùng hệ thống thiết bị thi công đồng bộ, chúng tôi cam kết chất lượng, tiến độ và an toàn lao động trên từng công trình.",
+  tomTat: "Xây dựng Hữu Đức hoạt động trong lĩnh vực xây dựng với ba mảng chính: dân dụng, cầu đường và cung cấp vật tư xây dựng. Với đội ngũ kỹ sư, công nhân giàu kinh nghiệm cùng hệ thống thiết bị thi công đồng bộ, chúng tôi cam kết chất lượng, tiến độ và an toàn lao động trên từng công trình.",
   noiDung: [
     "## Lịch sử hình thành",
     "Viết vài câu về năm thành lập và quá trình phát triển. (Nội dung mẫu.)",
@@ -88,12 +88,12 @@ var LINH_VUC = [
   },
   {
     id: "vat-lieu",
-    ten: "Mua bán vật liệu",
+    ten: "Cung cấp vật tư",
     bieuTuong: "vat-lieu",
-    tomTat: "Mua bán xi măng, thép, cát, đá, gạch và các loại vật liệu xây dựng cho công trình và khách hàng.",
+    tomTat: "Cung cấp xi măng, thép, cát, đá, gạch và các loại vật tư xây dựng cho công trình và khách hàng.",
     noiDung: [
-      "Cung cấp vật liệu xây dựng đúng chủng loại, đủ số lượng, giao hàng đúng hẹn cho công trình và khách hàng. (Nội dung mẫu, bạn thay bằng nội dung thật.)",
-      "## Mặt hàng kinh doanh",
+      "Cung cấp vật tư xây dựng đúng chủng loại, đủ số lượng, giao hàng đúng hẹn cho công trình và khách hàng. (Nội dung mẫu, bạn thay bằng nội dung thật.)",
+      "## Vật tư cung cấp",
       "- Xi măng, thép xây dựng",
       "- Cát, đá, gạch",
       "- Vật liệu hoàn thiện, thiết bị điện nước"
@@ -162,7 +162,7 @@ var DU_AN = [
      id: "ten-bai-khong-dau",
      tieuDe: "Tiêu đề bài viết",
      ngay: "24/11/2026",
-     chuyenMuc: "Hoạt động công ty",
+     loai: "tin-hoat-dong",   (chọn: tin-du-an, tin-tuyen-dung hoặc tin-hoat-dong)
      tomTat: "Một hai câu tóm tắt hiện ở thẻ ngoài trang chủ.",
      anhDaiDien: "images/ten-anh.jpg",
      noiDung: [
@@ -175,12 +175,20 @@ var DU_AN = [
      ]
    },
    (nhớ dấu phẩy ở cuối khối, trừ khối cuối cùng)                          */
+/* Ba thẻ tin. Mỗi bài ghi loai: đúng một trong ba id dưới đây.
+   Đổi tên thẻ thì sửa chữ trong ten, KHÔNG đổi id.                      */
+var TIN_LOAI = [
+  { id: "tin-du-an", ten: "Tin dự án" },
+  { id: "tin-tuyen-dung", ten: "Tin tuyển dụng" },
+  { id: "tin-hoat-dong", ten: "Tin hoạt động" }
+];
+
 var TIN_TUC = [
   {
     id: "khoi-cong-cong-trinh",
     tieuDe: "Khởi công công trình [Tên công trình]",
     ngay: "[Ngày đăng]",
-    chuyenMuc: "Hoạt động công ty",
+    loai: "tin-du-an",
     tomTat: "Một hai câu tóm tắt nội dung bài viết.",
     anhDaiDien: "images/tin-1.jpg",
     noiDung: [
@@ -194,10 +202,19 @@ var TIN_TUC = [
     ]
   },
   {
+    id: "tuyen-ky-su-xay-dung",
+    tieuDe: "Tuyển kỹ sư xây dựng cho công trình mới",
+    ngay: "[Ngày đăng]",
+    loai: "tin-tuyen-dung",
+    tomTat: "Một hai câu tóm tắt vị trí, số lượng và hạn nộp hồ sơ.",
+    anhDaiDien: "images/tin-4.jpg",
+    noiDung: ["Nội dung bài viết."]
+  },
+  {
     id: "tap-huan-an-toan-lao-dong",
     tieuDe: "Tập huấn an toàn lao động cho cán bộ và công nhân",
     ngay: "[Ngày đăng]",
-    chuyenMuc: "An toàn lao động",
+    loai: "tin-hoat-dong",
     tomTat: "Một hai câu tóm tắt nội dung bài viết.",
     anhDaiDien: "images/tin-2.jpg",
     noiDung: ["Nội dung bài viết."]
@@ -206,7 +223,7 @@ var TIN_TUC = [
     id: "nghiem-thu-ban-giao-cong-trinh",
     tieuDe: "Nghiệm thu và bàn giao công trình [Tên công trình]",
     ngay: "[Ngày đăng]",
-    chuyenMuc: "Hoạt động công ty",
+    loai: "tin-du-an",
     tomTat: "Một hai câu tóm tắt nội dung bài viết.",
     anhDaiDien: "images/tin-3.jpg",
     noiDung: ["Nội dung bài viết."]
@@ -218,6 +235,8 @@ var TUYEN_DUNG = [
   {
     id: "ky-su-xay-dung",
     viTri: "Kỹ sư xây dựng",
+    phongBan: "Phòng Kỹ thuật",
+    hinhThuc: "Toàn thời gian",
     soLuong: "02",
     diaDiem: "[Địa điểm làm việc]",
     mucLuong: "Thỏa thuận",
@@ -238,7 +257,20 @@ var TUYEN_DUNG = [
   {
     id: "chi-huy-truong",
     viTri: "Chỉ huy trưởng công trình",
+    phongBan: "Ban chỉ huy công trường",
+    hinhThuc: "Toàn thời gian",
     soLuong: "01",
+    diaDiem: "[Địa điểm làm việc]",
+    mucLuong: "Thỏa thuận",
+    hanNop: "",
+    noiDung: ["Mô tả công việc và yêu cầu."]
+  },
+  {
+    id: "cong-nhan-thi-cong",
+    viTri: "Công nhân thi công",
+    phongBan: "Đội thi công",
+    hinhThuc: "Thời vụ",
+    soLuong: "10",
     diaDiem: "[Địa điểm làm việc]",
     mucLuong: "Thỏa thuận",
     hanNop: "",

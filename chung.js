@@ -51,15 +51,26 @@
     return '<a class="card pj" href="' + link('du-an', x.id) + '" style="display:flex;flex-direction:column;background:#f4f6f7;border:1px solid #a9b0b7">' + hinh +
       '<div style="padding:18px 20px;display:flex;flex-direction:column;gap:6px"><h3 style="margin:0;font-size:19px;font-weight:600">' + esc(x.ten) + '</h3><span style="font-size:14px;color:#3a424a">' + esc(phu) + '</span></div></a>';
   };
+  function tenTin(id) {
+    var L = window.TIN_LOAI || [];
+    for (var i = 0; i < L.length; i++) if (L[i].id === id) return L[i].ten;
+    return '';
+  }
   window.theTin = function (x) {
-    var phu = [x.ngay, x.tomTat].filter(Boolean).join(' · ');
-    return '<a class="card lv" href="' + link('tin-tuc', x.id) + '" style="padding:28px 24px;background:rgba(255,255,255,0.72);border:1px solid #a9b0b7;border-top:4px solid #AD532F;display:flex;flex-direction:column;gap:10px">' +
-      icon('tin') + '<h3 style="margin:0;font-size:20px;font-weight:600">' + esc(x.tieuDe) + '</h3>' +
-      '<p style="margin:0;font-size:15px;line-height:1.5;color:#3a424a">' + esc(phu) + '</p></a>';
+    var hinh = x.anhDaiDien ? anh(x.anhDaiDien, 'zoom', '190px', x.tieuDe)
+      : '<div class="zoom" style="height:190px;display:flex;align-items:center;justify-content:center;background:#9aa3ab;color:#fff;font-size:14px;letter-spacing:.08em">CHƯA CÓ ẢNH</div>';
+    var the = tenTin(x.loai);
+    return '<a class="card pj" href="' + link('tin-tuc', x.id) + '" style="display:flex;flex-direction:column;background:#f4f6f7;border:1px solid #a9b0b7">' + hinh +
+      '<div style="padding:18px 20px;display:flex;flex-direction:column;gap:8px">' +
+      (the ? '<span style="align-self:flex-start;padding:3px 10px;background:#AD532F;color:#fff;font-size:13px;font-weight:600;border-radius:3px">' + esc(the) + '</span>' : '') +
+      '<h3 style="margin:0;font-size:19px;font-weight:600">' + esc(x.tieuDe) + '</h3>' +
+      (x.ngay ? '<span style="font-size:14px;color:#3a424a">' + esc(x.ngay) + '</span>' : '') +
+      (x.tomTat ? '<p style="margin:0;font-size:15px;line-height:1.5;color:#3a424a">' + esc(x.tomTat) + '</p>' : '') +
+      '</div></a>';
   };
 
   window.theTuyenDung = function (x) {
-    var phu = [x.soLuong ? 'Số lượng: ' + x.soLuong : '', x.diaDiem, x.mucLuong].filter(Boolean).join(' · ');
+    var phu = [x.phongBan, x.hinhThuc, x.soLuong ? 'Số lượng: ' + x.soLuong : '', x.diaDiem, x.mucLuong].filter(Boolean).join(' · ');
     return '<a class="card lv" href="' + link('tuyen-dung', x.id) + '" style="padding:28px 24px;background:rgba(255,255,255,0.72);border:1px solid #a9b0b7;border-top:4px solid #AD532F;display:flex;flex-direction:column;gap:10px">' +
       icon('tin') + '<h3 style="margin:0;font-size:20px;font-weight:600">' + esc(x.viTri) + '</h3>' +
       '<p style="margin:0;font-size:15px;line-height:1.5;color:#3a424a">' + esc(phu) + '</p></a>';
@@ -120,5 +131,5 @@
     }
   };
 
-  window.CHUNG = { esc: esc, anh: anh, link: link, tenLoai: tenLoai, icon: icon };
+  window.CHUNG = { esc: esc, anh: anh, link: link, tenLoai: tenLoai, tenTin: tenTin, icon: icon };
 })();

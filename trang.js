@@ -29,6 +29,81 @@
     return cap.length ? '<div class="thongtin">' + cap.map(function (p) { return '<div><b>' + p[0] + '</b><span>' + E(p[1]) + '</span></div>'; }).join('') + '</div>' : '';
   }
 
+  /* ----- Kiểu cho thanh lọc, ô tên công ty và màn chào ----- */
+  (function () {
+    var st = document.createElement('style');
+    st.textContent =
+      '.thanh-loc{display:flex;flex-wrap:wrap;gap:12px;margin:8px 0 24px}' +
+      '.thanh-loc select,.thanh-loc input{font:inherit;font-size:15px;padding:11px 14px;border:1px solid #a9b0b7;border-radius:4px;background:#fff;color:#2b3238;min-width:180px}' +
+      '.thanh-loc input{flex:1 1 240px}' +
+      '.thanh-loc select:focus,.thanh-loc input:focus{outline:2px solid #AD532F;outline-offset:0}' +
+      '.hs{background:#fff;border:1px solid #dcc9b7;border-radius:6px;padding:32px;box-shadow:0 1px 4px rgba(0,0,0,.06);margin:8px 0 24px}' +
+      '.hs-top{display:flex;flex-wrap:wrap;align-items:center;gap:20px}' +
+      '.hs-logo{width:80px;height:80px;border:1px solid #dcc9b7;border-radius:4px;display:flex;align-items:center;justify-content:center;background:#fff;flex:0 0 auto}' +
+      '.hs-logo img{height:64px;width:auto;display:block}' +
+      '.hs-ten{display:flex;flex-direction:column;gap:6px;flex:1 1 260px}' +
+      '.hs-name{font-size:clamp(20px,3vw,30px);font-weight:800;color:#1b1f23;text-transform:uppercase;line-height:1.2}' +
+      '.hs-mst{padding:10px 16px;background:#F3E9DE;color:#3a424a;font-size:14px;font-weight:700;border-radius:4px}' +
+      '@keyframes hd-vao{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}' +
+      '@keyframes hd-logo{0%{opacity:0;transform:scale(.8)}60%{opacity:1;transform:scale(1.04)}100%{opacity:1;transform:scale(1)}}' +
+      '@keyframes hd-vach{from{transform:scaleX(0)}to{transform:scaleX(1)}}' +
+      '#noi-dung.chuyen>*{animation:hd-vao .55s cubic-bezier(.2,.7,.2,1) both}' +
+      '#noi-dung.chuyen>*:nth-child(2){animation-delay:.07s}#noi-dung.chuyen>*:nth-child(3){animation-delay:.14s}' +
+      '#noi-dung.chuyen>*:nth-child(4){animation-delay:.21s}#noi-dung.chuyen>*:nth-child(n+5){animation-delay:.28s}' +
+      '#man-chao{position:fixed;top:0;right:0;bottom:0;left:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;background:#FBF7F1;transition:opacity .45s ease,visibility .45s}' +
+      '#man-chao.an{opacity:0;visibility:hidden}' +
+      '#man-chao img{height:96px;width:auto;animation:hd-logo .7s ease both}' +
+      '#man-chao i{display:block;width:120px;height:4px;background:#AD532F;transform-origin:left;animation:hd-vach .8s ease both .1s}' +
+      '@media (prefers-reduced-motion:reduce){#noi-dung.chuyen>*,#man-chao img,#man-chao i{animation:none}}';
+    document.head.appendChild(st);
+  })();
+
+  function hoSoCty() {
+    return '<div class="hs"><div class="hs-top"><div class="hs-logo"><img src="images/logo.png" alt="Logo Hữu Đức"></div>' +
+      '<div class="hs-ten"><div class="hs-name">Xây dựng Hữu Đức</div></div>' +
+      (C.maSoThue ? '<div class="hs-mst">MST: ' + E(C.maSoThue) + '</div>' : '') + '</div></div>';
+  }
+
+  /* ----- Thanh lọc: ô chọn + tìm kiếm nhanh ----- */
+  function boDau(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd'); }
+  function duyNhat(list, k) {
+    var o = [], s = {};
+    list.forEach(function (x) { var v = x[k]; if (v && !s[v]) { s[v] = 1; o.push([v, v]); } });
+    return o;
+  }
+  function boLoc(loai, list) {
+    if (loai === 'tin-tuc') return [{ k: 'loai', nhan: 'Tất cả thẻ tin', ds: (window.TIN_LOAI || []).map(function (l) { return [l.id, l.ten]; }) }];
+    if (loai === 'du-an') return [{ k: 'loai', nhan: 'Tất cả lĩnh vực', ds: (window.LINH_VUC || []).map(function (l) { return [l.id, l.ten]; }) }];
+    if (loai === 'tuyen-dung') return [
+      { k: 'phongBan', nhan: 'Tất cả phòng ban', ds: duyNhat(list, 'phongBan') },
+      { k: 'viTri', nhan: 'Tất cả vị trí', ds: duyNhat(list, 'viTri') },
+      { k: 'hinhThuc', nhan: 'Tất cả hình thức', ds: duyNhat(list, 'hinhThuc') }
+    ];
+    return [];
+  }
+  var TIM = { 'tin-tuc': ['tieuDe', 'tomTat'], 'du-an': ['ten', 'diaDiem', 'tomTat'], 'tuyen-dung': ['viTri', 'phongBan', 'hinhThuc', 'diaDiem'] };
+  function thanhLoc(loai, list, loc) {
+    return '<div class="thanh-loc">' + boLoc(loai, list).map(function (f) {
+      return '<select data-k="' + f.k + '" aria-label="' + E(f.nhan) + '"><option value="">' + E(f.nhan) + '</option>' +
+        f.ds.map(function (d) { return '<option value="' + E(d[0]) + '"' + (f.k === 'loai' && d[0] === loc ? ' selected' : '') + '>' + E(d[1]) + '</option>'; }).join('') + '</select>';
+    }).join('') + '<input type="search" placeholder="Tìm kiếm nhanh..." aria-label="Tìm kiếm nhanh"></div><div id="ds-loc"></div>';
+  }
+  function ganLoc(loai, list) {
+    var box = main.querySelector('.thanh-loc'), ds = document.getElementById('ds-loc');
+    function ap() {
+      var sel = box.querySelectorAll('select'), q = boDau(box.querySelector('input').value).trim();
+      var kq = list.filter(function (x) {
+        for (var i = 0; i < sel.length; i++) { var v = sel[i].value; if (v && x[sel[i].getAttribute('data-k')] !== v) return false; }
+        if (q && boDau((TIM[loai] || []).map(function (k) { return x[k] || ''; }).join(' ')).indexOf(q) < 0) return false;
+        return true;
+      });
+      ds.innerHTML = kq.length ? luoi(kq, THE[loai]) : '<p>Không có kết quả phù hợp.</p>';
+    }
+    box.addEventListener('change', ap);
+    box.addEventListener('input', ap);
+    ap();
+  }
+
   /* ----- TRANG CHỦ ----- */
   function trangChu() {
     document.title = 'Xây dựng Hữu Đức';
@@ -48,6 +123,7 @@
     var loai = 'trang-chu', id = null, loc = null;
     if (h && h !== 'trang-chu') {
       if (h.indexOf('du-an-loc-') === 0) { loai = 'du-an'; loc = h.slice(10); }
+      else if (h.indexOf('tin-tuc-loc-') === 0) { loai = 'tin-tuc'; loc = h.slice(12); }
       else { var p = h.split('--'); loai = p[0]; id = p[1] || null; }
     }
     window.scrollTo(0, 0);
@@ -80,7 +156,7 @@
       var dong = [['Địa chỉ', C.diaChi], ['Điện thoại', C.sdt], ['Email', C.email], ['Mã số thuế', C.maSoThue], ['Giờ làm việc', C.gioLamViec]].filter(function (p) { return p[1]; });
       var ban = C.banDo ? '<iframe src="' + E(C.banDo) + '" style="border:0;width:100%;height:100%;min-height:320px" loading="lazy" allowfullscreen></iframe>'
         : '<div class="anh-trong-lh">[BẢN ĐỒ] Dán link nhúng Google Maps vào mục banDo trong du-lieu.js</div>';
-      main.innerHTML = '<div class="trang"><h1>Liên hệ</h1><p class="tomtat">Bạn có dự án cần thi công? Hãy liên hệ để được tư vấn và báo giá.</p>' +
+      main.innerHTML = '<div class="trang"><h1>Liên hệ</h1>' + hoSoCty() +
         '<div class="lh"><div class="lh-tt">' + dong.map(function (p) { return '<div><b>' + p[0] + '</b><span>' + E(p[1]) + '</span></div>'; }).join('') + '</div><div class="lh-bd">' + ban + '</div></div></div>' + cta(loai) + chan();
       return;
     }
@@ -88,14 +164,12 @@
     /* ----- DANH SÁCH ----- */
     if (!id) {
       document.title = TIEU_DE[loai] + TEN;
-      var items = list, chips = '';
-      if (loai === 'du-an') {
-        chips = '<div class="loc"><a href="#du-an" class="' + (!loc ? 'on' : '') + '">Tất cả</a>' +
-          (window.LINH_VUC || []).map(function (l) { return '<a href="#du-an-loc-' + E(l.id) + '" class="' + (loc === l.id ? 'on' : '') + '">' + E(l.ten) + '</a>'; }).join('') + '</div>';
-        if (loc) items = list.filter(function (x) { return x.loai === loc; });
+      if (loai === 'linh-vuc') {
+        main.innerHTML = '<div class="trang"><h1>' + TIEU_DE[loai] + '</h1>' + luoi(list, THE[loai]) + '</div>' + cta(loai) + chan();
+        return;
       }
-      main.innerHTML = '<div class="trang"><h1>' + TIEU_DE[loai] + '</h1>' + chips +
-        (items.length ? luoi(items, THE[loai]) : '<p>Chưa có nội dung.</p>') + '</div>' + cta(loai) + chan();
+      main.innerHTML = '<div class="trang"><h1>' + TIEU_DE[loai] + '</h1>' + thanhLoc(loai, list, loc) + '</div>' + cta(loai) + chan();
+      ganLoc(loai, list);
       return;
     }
 
@@ -112,12 +186,12 @@
     document.title = tieuDe + TEN;
     var s = '<div class="trang"><a class="more back" href="#' + loai + '">← Quay lại ' + TIEU_DE[loai] + '</a><h1>' + E(tieuDe) + '</h1>';
     if (loai === 'tin-tuc') {
-      var meta = [item.ngay, item.chuyenMuc].filter(Boolean).join(' · ');
+      var meta = [item.ngay, H.tenTin(item.loai)].filter(Boolean).join(' · ');
       if (meta) s += '<div class="meta">' + E(meta) + '</div>';
     }
     if (item.anhDaiDien) s += H.anh(item.anhDaiDien, 'hero', 'clamp(220px,34vw,460px)', tieuDe);
     if (loai === 'du-an') s += bang([['Lĩnh vực', H.tenLoai(item.loai)], ['Địa điểm', item.diaDiem], ['Chủ đầu tư', item.chuDauTu], ['Năm hoàn thành', item.nam], ['Quy mô', item.quyMo], ['Giá trị', item.giaTri]]);
-    if (loai === 'tuyen-dung') s += bang([['Số lượng', item.soLuong], ['Địa điểm làm việc', item.diaDiem], ['Mức lương', item.mucLuong], ['Hạn nộp hồ sơ', item.hanNop]]);
+    if (loai === 'tuyen-dung') s += bang([['Phòng ban', item.phongBan], ['Hình thức', item.hinhThuc], ['Số lượng', item.soLuong], ['Địa điểm làm việc', item.diaDiem], ['Mức lương', item.mucLuong], ['Hạn nộp hồ sơ', item.hanNop]]);
     if (item.tomTat && loai !== 'tin-tuc') s += '<p class="tomtat">' + E(item.tomTat) + '</p>';
     s += '<div class="noidung">' + window.noiDungHTML(item.noiDung) + '</div>';
     if (loai === 'du-an' && item.thuVienAnh && item.thuVienAnh.length) {
@@ -146,6 +220,15 @@
     document.body.appendChild(o);
   });
 
+  /* ----- Màn chào khi tải / tải lại trang (chuyển trang không có hiệu ứng) ----- */
+  var mc = document.createElement('div');
+  mc.id = 'man-chao';
+  mc.innerHTML = '<img src="images/logo.png" alt=""><i></i>';
+  document.body.appendChild(mc);
+  setTimeout(function () { mc.classList.add('an'); setTimeout(function () { mc.remove(); }, 600); }, 900);
+
   window.addEventListener('hashchange', render);
   render();
+  main.classList.add('chuyen');
+  setTimeout(function () { main.classList.remove('chuyen'); }, 1000);
 })();
