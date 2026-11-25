@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Xây dựng Hữu Đức</title>
+<meta name="description" content="Xây dựng Hữu Đức: thi công xây dựng dân dụng, cầu đường và mua bán vật liệu xây dựng.">
+<link rel="icon" href="images/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="giao-dien.css">
+</head>
+<body>
+<div id="khung" style="display:flex;flex-wrap:wrap;align-items:stretch;min-height:900px;background:#FBF7F1">
+
+<!-- THANH CẤU TRÚC BÊN TRÁI -->
+<main id="noi-dung" style="flex:999 1 560px;min-width:0;display:flex;flex-direction:column"></main>
+</div>
+<template id="tpl-home">
+<!-- Banner -->
+<section data-s="trang-chu" style="position:relative;overflow:hidden;box-sizing:border-box;padding:110px 64px;border-bottom:4px solid #AD532F">
+<div aria-hidden="true" style="position:absolute;top:0;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;background:#b8bfc6;color:#fff;font-size:14px;letter-spacing:0.08em">[ẢNH NỀN CÔNG TRÌNH]</div>
+<div aria-hidden="true" style="position:absolute;top:0;right:0;bottom:0;left:0;background:rgba(255,255,255,0.88)"></div>
+<div style="position:relative;display:flex;flex-direction:column;gap:20px">
+<h1 style="margin:0;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-weight:800;font-size:clamp(18px,4.6vw,66px);line-height:1.15;white-space:nowrap;color:#85391d">XÂY DỰNG HỮU ĐỨC</h1>
+</div>
+</section>
+
+<!-- Số liệu -->
+<section id="ds-so-lieu" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;background:#F3E9DE;border-bottom:1px solid #dcc9b7"></section>
+
+<!-- Giới thiệu -->
+<section data-s="gioi-thieu" style="position:relative;overflow:hidden;box-sizing:border-box;padding:80px 64px">
+<div aria-hidden="true" style="position:absolute;top:0;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;background:#b8bfc6;color:#fff;font-size:14px;letter-spacing:0.08em">[ẢNH NỀN GIỚI THIỆU]</div>
+<div aria-hidden="true" style="position:absolute;top:0;right:0;bottom:0;left:0;background:rgba(255,255,255,0.88)"></div>
+<div style="position:relative;display:flex;flex-direction:column;gap:16px;max-width:720px">
+<h2 style="margin:0;font-size:40px;font-weight:800;line-height:1.2;color:#85391d">Giới thiệu</h2>
+<p id="gt-tomtat" style="margin:0;font-size:17px;line-height:1.6;color:#2b3238">Xây dựng Hữu Đức hoạt động trong lĩnh vực xây dựng với ba mảng chính: dân dụng, cầu đường và hạ tầng. Với đội ngũ kỹ sư, công nhân giàu kinh nghiệm cùng hệ thống thiết bị thi công đồng bộ, chúng tôi cam kết chất lượng, tiến độ và an toàn lao động trên từng công trình.</p>
+<a class="more" href="#gioi-thieu" style="font-weight:600;font-size:16px">Xem trang Giới thiệu →</a>
+</div>
+</section>
+
+<!-- Lĩnh vực hoạt động -->
+<section data-s="linh-vuc" style="padding:40px 64px;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px">
+<h2 style="margin:0;font-size:40px;font-weight:800;line-height:1.2;color:#85391d">Lĩnh vực hoạt động</h2>
+<a class="more" href="#linh-vuc" style="font-weight:600;font-size:16px">Xem tất cả lĩnh vực →</a>
+</div>
+<div id="ds-linh-vuc" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px"></div>
+</section>
+
+<!-- Dự án -->
+<section data-s="du-an" style="padding:40px 64px;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px">
+<h2 style="margin:0;font-size:40px;font-weight:800;line-height:1.2;color:#85391d">Dự án</h2>
+<a class="more" href="#du-an" style="font-weight:600;font-size:16px">Xem tất cả dự án →</a>
+</div>
+<div id="ds-du-an" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px"></div>
+</section>
+
+<!-- Tin tức -->
+<section data-s="tin-tuc" style="padding:40px 64px;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px">
+<h2 style="margin:0;font-size:40px;font-weight:800;line-height:1.2;color:#85391d">Tin tức</h2>
+<a class="more" href="#tin-tuc" style="font-weight:600;font-size:16px">Xem tất cả tin tức →</a>
+</div>
+<div id="ds-tin-tuc" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px"></div>
+</section>
+
+<!-- Tuyển dụng -->
+<section data-s="tuyen-dung" style="margin:40px 64px;padding:40px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px;background:#B05730;color:#fff">
+<div style="display:flex;flex-direction:column;gap:12px;max-width:640px">
+<h2 style="margin:0;font-size:40px;font-weight:800;line-height:1.2;color:#fff">Tuyển dụng</h2>
+<p style="margin:0;font-size:17px;line-height:1.6;color:#fff">Hữu Đức luôn chào đón kỹ sư, chỉ huy trưởng công trình, cán bộ kỹ thuật và công nhân có tay nghề. Gửi hồ sơ về <span data-cfg="email">info.hdc@gmail.com</span> để được liên hệ.</p>
+</div>
+<a class="btn" href="#tuyen-dung" style="display:inline-block;padding:15px 28px;background:#fff;color:#AD532F;font-weight:600;font-size:16px;border-radius:4px">Xem vị trí tuyển dụng</a>
+</section>
+
+<!-- Liên hệ -->
+<section data-s="lien-he" style="padding:40px 64px 72px;display:flex;flex-wrap:wrap;gap:40px">
+<div style="flex:1 1 360px;display:flex;flex-direction:column;gap:18px">
+<h2 style="margin:0;font-size:52px;font-weight:800;line-height:1.15;color:#85391d">Liên hệ</h2>
+<p style="margin:0;font-size:22px;font-weight:600;line-height:1.5;color:#2b3238">Bạn có dự án cần thi công? Hãy liên hệ để được tư vấn và báo giá.</p>
+<p style="margin:0;font-size:20px;line-height:1.9;color:#2b3238"><strong style="display:block;margin-bottom:6px;font-size:34px;font-weight:800;line-height:1.2;letter-spacing:0.02em;color:#AD532F;text-transform:uppercase">Xây Dựng Hữu Đức</strong>Địa chỉ: <span data-cfg="diaChi">[ĐỊA CHỈ TRỤ SỞ]</span><br>Điện thoại: <span data-cfg="sdt">0357190499</span><br>Email: <span data-cfg="email">info.hdc@gmail.com</span><br>Mã số thuế: <span data-cfg="maSoThue">[MÃ SỐ THUẾ]</span></p>
+</div>
+<div style="flex:1 1 320px;min-height:240px;display:flex;align-items:center;justify-content:center;background:#9aa3ab;border:1px solid #4b535b;color:#fff;font-size:15px;letter-spacing:0.08em">[BẢN ĐỒ / BIỂU MẪU LIÊN HỆ]</div>
+</section>
+
+<footer style="padding:28px 64px 36px;text-align:center;font-size:14px;color:#6b5a4d">© 2026 XÂY DỰNG HỮU ĐỨC. Giữ toàn quyền.</footer>
+
+</template>
+<script src="du-lieu.js"></script>
+<script src="chung.js"></script>
+<script src="trang.js"></script>
+</body>
+</html>
