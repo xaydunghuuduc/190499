@@ -104,6 +104,22 @@
     ap();
   }
 
+  /* Link Google Maps bất kỳ -> link nhúng được vào khung.
+     Nhận: link nhúng (…/maps/embed…), link dài có tọa độ (@14.95,108.88 hoặc !3d…!4d…).
+     Link rút gọn maps.app.goo.gl không nhúng được -> dùng địa chỉ công ty. */
+  function linkBanDo() {
+    var u = String(C.banDo || '').trim();
+    if (!u) return '';
+    if (/\/maps\/embed|output=embed/.test(u)) return u;
+    var m = /!3d(-?[\d.]+)!4d(-?[\d.]+)/.exec(u) || /@(-?[\d.]+),(-?[\d.]+)/.exec(u) || /[?&]q=(-?[\d.]+),\s*(-?[\d.]+)/.exec(u);
+    var q = m ? m[1] + ',' + m[2] : (C.diaChi || '');
+    return q ? 'https://maps.google.com/maps?q=' + encodeURIComponent(q) + '&z=16&hl=vi&output=embed' : '';
+  }
+  function khungBanDo(h) {
+    var src = linkBanDo();
+    return src ? '<iframe src="' + E(src) + '" style="border:0;width:100%;height:100%;min-height:' + h + '" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="Bản đồ"></iframe>' : '';
+  }
+
   /* ----- TRANG CHỦ ----- */
   function trangChu() {
     document.title = 'Xây dựng Hữu Đức';
@@ -116,6 +132,8 @@
     document.getElementById('ds-du-an').innerHTML = DATA['du-an'].slice(0, 3).map(window.theDuAn).join('');
     document.getElementById('ds-tin-tuc').innerHTML = DATA['tin-tuc'].slice(0, 3).map(window.theTin).join('');
     window.dienThongTin();
+    var bdtc = document.getElementById('ban-do-tc'), kbd = khungBanDo('240px');
+    if (bdtc && kbd) { bdtc.innerHTML = kbd; bdtc.style.background = 'none'; bdtc.style.display = 'flex'; }
   }
 
   function render() {
@@ -154,8 +172,7 @@
     if (loai === 'lien-he') {
       document.title = 'Liên hệ' + TEN;
       var dong = [['Địa chỉ', C.diaChi], ['Điện thoại', C.sdt], ['Email', C.email], ['Mã số thuế', C.maSoThue], ['Giờ làm việc', C.gioLamViec]].filter(function (p) { return p[1]; });
-      var ban = C.banDo ? '<iframe src="' + E(C.banDo) + '" style="border:0;width:100%;height:100%;min-height:320px" loading="lazy" allowfullscreen></iframe>'
-        : '<div class="anh-trong-lh">[BẢN ĐỒ] Dán link nhúng Google Maps vào mục banDo trong du-lieu.js</div>';
+      var ban = khungBanDo('320px') || '<div class="anh-trong-lh">[BẢN ĐỒ] Dán link Google Maps vào mục Bản đồ ở trang Quản trị</div>';
       main.innerHTML = '<div class="trang"><h1>Liên hệ</h1>' + hoSoCty() +
         '<div class="lh"><div class="lh-tt">' + dong.map(function (p) { return '<div><b>' + p[0] + '</b><span>' + E(p[1]) + '</span></div>'; }).join('') + '</div><div class="lh-bd">' + ban + '</div></div></div>' + cta(loai) + chan();
       return;
