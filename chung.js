@@ -11,7 +11,7 @@
 
   var ICONS = {
     'dan-dung': '<path d="M3 21V9l9-6 9 6v12M9 21v-7h6v7"></path>',
-    'cau-duong': '<path d="M10 3L8 12M14 3L16 12M12 4v2M12 8v2M3 12h18M3 21h18M5 21c0-5 3-9 7-9s7 4 7 9"></path>',
+    'cau-duong': '<path d="M2.5 8.5h19M4.5 8.5v2M19.5 8.5v2M10.6 3.5L7 20.5M13.4 3.5L17 20.5M12 12v2M12 17v3.5"></path>',
     'vat-lieu': '<path d="M3 5h18v5H3zM3 10h18v5H3zM3 15h18v5H3zM9 5v5M15 10v5M9 15v5"></path>',
     'tin': '<rect x="4" y="4" width="16" height="16" rx="1"></rect><path d="M8 9h8M8 13h8M8 17h5"></path>'
   };
