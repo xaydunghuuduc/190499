@@ -68,7 +68,7 @@ window.TIN_LOAI = [
       return truoc.then(function () {
         return new Promise(function (ok, loi) {
           var s = document.createElement('script');
-          s.src = f; s.onload = ok; s.onerror = function () { loi(new Error(f)); };
+          s.src = f + '?v=' + Date.now(); s.onload = ok; s.onerror = function () { loi(new Error(f)); };
           document.body.appendChild(s);
         });
       });
